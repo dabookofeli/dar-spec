@@ -1,80 +1,46 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/dabookofeli/dar-spec/spec/dar-schema.json",
-  "title": "Digital Action Receipt (DAR)",
-  "description": "Non-authoritative JSON Schema for the Digital Action Receipts (DAR) core payload. The normative definition is provided in dar-core.md.",
+  "title": "Digital Action Receipt (DAR) — Envelope",
+  "description": "Non-authoritative JSON Schema for a DAR envelope containing a canonicalized payload and optional metadata (e.g., signature). The normative definition is in dar-core.md.",
   "type": "object",
-  "required": [
-    "dar_version",
-    "action_type",
-    "action_id",
-    "timestamp",
-    "actor",
-    "inputs_hash",
-    "outcome_hash"
-  ],
+  "required": ["payload"],
   "properties": {
-    "dar_version": {
-      "type": "string",
-      "description": "Version of the DAR core specification."
-    },
-    "action_type": {
-      "type": "string",
-      "description": "A string identifying the category or class of the digital action."
-    },
-    "action_id": {
-      "type": "string",
-      "description": "A unique identifier for the digital action."
-    },
-    "timestamp": {
-      "type": "string",
-      "format": "date-time",
-      "description": "RFC 3339 timestamp representing when the action reached its commit point."
-    },
-    "actor": {
-      "type": "object",
-      "required": ["type", "id"],
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": ["system", "service", "agent", "user"],
-          "description": "The class of actor responsible for the action."
-        },
-        "id": {
-          "type": "string",
-          "description": "An opaque identifier for the actor."
-        }
-      },
-      "additionalProperties": false
-    },
-    "inputs_hash": {
-      "type": "string",
-      "description": "A cryptographic hash referencing the inputs associated with the action."
-    },
-    "outcome_hash": {
-      "type": "string",
-      "description": "A cryptographic hash referencing the outcome or result of the action."
+    "payload": {
+      "$ref": "dar-payload-schema.json",
+      "description": "The core DAR payload. Canonicalization, hashing, and signing are performed over this object only."
     },
     "signature": {
       "type": "object",
-      "description": "Optional cryptographic signature asserting issuance authenticity.",
+      "description": "Optional cryptographic signature over the canonicalized payload bytes.",
       "required": ["algorithm", "key_id", "value"],
       "properties": {
         "algorithm": {
           "type": "string",
-          "description": "The signature algorithm used."
+          "minLength": 1,
+          "description": "The signature algorithm used (e.g., ed25519)."
         },
         "key_id": {
           "type": "string",
+          "minLength": 1,
           "description": "Identifier for the signing key."
         },
         "value": {
           "type": "string",
+          "minLength": 1,
           "description": "Base64-encoded signature value."
         }
       },
       "additionalProperties": false
+    },
+    "receipt_hash": {
+      "type": "string",
+      "description": "Optional convenience field: derived SHA-256 hash of the canonicalized payload. Not part of the payload and not required for verifiability."
+    },
+    "locator": {
+      "type": "string",
+      "description": "Optional retrieval hint (URI/URL/URN). Not part of the payload."
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }
