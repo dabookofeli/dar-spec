@@ -1,4 +1,8 @@
-1. Introduction
+# Digital Action Receipts (DAR) — Core Specification
+
+## Status of This Document
+
+## 1. Introduction
 
 A Digital Action Receipt (DAR) is a cryptographically verifiable record asserting that a specific digital action occurred at a defined point in time.
 
@@ -15,7 +19,7 @@ Long-term auditability
 DARs do not assert correctness, intent, compliance, or authorization.
 They assert only that an action occurred and was recorded.
 
-2. Terminology
+## 2. Terminology
 
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHOULD, MAY, and OPTIONAL in this document are to be interpreted as described in RFC 2119.
 
@@ -29,7 +33,7 @@ Canonical Form: A deterministic serialization of a DAR payload.
 
 Receipt Hash: A cryptographic hash representing the DAR payload.
 
-3. Design Principles (Non-Normative)
+## 3. Design Principles (Non-Normative)
 
 DARs are intentionally:
 
