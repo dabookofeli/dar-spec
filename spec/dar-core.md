@@ -62,13 +62,14 @@ DARs MUST be generated at or immediately after the commit point.
 
 ## 5. Object Model
 
-A DAR has two parts:
-1. A **payload** (the core object that is canonicalized and hashed)
-2. An OPTIONAL **signature block** (which signs the canonical payload)
+A DAR consists of:
 
-### 5.1 Core Payload (Normative)
+1) a **payload** (canonicalized, hashed, and optionally signed)  
+2) an OPTIONAL **envelope** (transport metadata such as signature, locator, or derived receipt hash)
 
-A DAR payload MUST include the following fields:
+### 5.1 Core DAR Payload (Normative)
+
+The payload is the object that MUST be canonicalized and hashed.
 
 ```json
 {
@@ -97,6 +98,29 @@ outcome_hash -	MUST be a hash of referenced outcomes (see §6)
 
 Note (Non-Normative): action_id uniqueness scope is intentionally issuer-scoped to avoid requiring global coordination.
 
+## 5.3 Envelope (Normative)
+
+A DAR MAY be transported inside an envelope object that contains the core payload and optional metadata.
+
+The envelope MAY include:
+- a cryptographic signature
+- a derived receipt hash
+- optional retrieval or locator hints
+
+The envelope MUST include the `payload` field.
+
+```json
+{
+  "payload": { "...": "DAR payload object..." },
+  "signature": {
+    "algorithm": "string",
+    "key_id": "string",
+    "value": "base64-encoded signature"
+  },
+  "receipt_hash": "string",
+  "locator": "string"
+}
+
 ## 6. Data Handling Requirements (Normative)
 
 - DAR payloads MUST NOT embed raw input or output data.
@@ -115,6 +139,8 @@ The RECOMMENDED value is the SHA-256 hash of the empty byte string:
 Implementations MAY use an equivalent well-defined empty-set hash, but MUST be consistent within an issuer.
 
 ## 7. Canonicalization (Normative)
+```md
+Canonicalization applies to the DAR payload only, excluding all envelope fields.
 
 Before hashing or signing, DAR payloads MUST be canonicalized.
 
@@ -157,6 +183,8 @@ If present, the signature block MUST include:
 Signatures assert issuance authenticity, not action correctness.
 
 Note (Normative): The signature MUST be computed over the canonicalized payload bytes (not over a wrapper object).
+
+If present, the signature MUST be computed over the canonicalized payload bytes.
 
 ## 10. Storage Requirements (Normative)
 
