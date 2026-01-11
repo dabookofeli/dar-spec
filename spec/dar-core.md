@@ -85,19 +85,22 @@ The payload is the object that MUST be canonicalized and hashed.
   "inputs_hash": "string",
   "outcome_hash": "string"
 }
-5.2 Field Definitions (Normative)
-Field	Requirement
-dar_version	MUST identify the DAR core version (e.g., "1.0")
-action_type	MUST describe the category of action (issuer-defined string)
-action_id	MUST uniquely identify the action within the issuer’s namespace
-timestamp	MUST represent the action commit time in RFC3339 format
-actor.type	MUST indicate the actor class
-actor.id	MUST be an opaque identifier (no required semantics)
-inputs_hash	MUST be a hash of referenced inputs (see §6)
-outcome_hash	MUST be a hash of referenced outcomes (see §6)
 
-Note (Non-Normative):
-action_id uniqueness scope is intentionally issuer-scoped to avoid requiring global coordination.
+### 5.2 Field Definitions (Normative)
+
+| Field | Requirement |
+|------|-------------|
+| `dar_version` | MUST identify the DAR core version (e.g., `"1.0"`) |
+| `action_type` | MUST describe the category of action (issuer-defined string) |
+| `action_id` | MUST uniquely identify the action within the issuer’s namespace |
+| `timestamp` | MUST represent the action commit time in RFC3339 format |
+| `actor.type` | MUST indicate the actor class |
+| `actor.id` | MUST be an opaque identifier (no required semantics) |
+| `inputs_hash` | MUST be a hash of referenced inputs (see §6) |
+| `outcome_hash` | MUST be a hash of referenced outcomes (see §6) |
+
+**Note (Non-Normative):**  
+`action_id` uniqueness scope is intentionally issuer-scoped to avoid requiring global coordination.
 
 5.3 Envelope (Normative)
 A DAR MAY be transported inside an envelope object that contains the core payload and optional metadata.
