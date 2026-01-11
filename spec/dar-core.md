@@ -102,7 +102,8 @@ The payload is the object that MUST be canonicalized and hashed.
 **Note (Non-Normative):**  
 `action_id` uniqueness scope is intentionally issuer-scoped to avoid requiring global coordination.
 
-5.3 Envelope (Normative)
+### 5.3 Envelope (Normative)
+
 A DAR MAY be transported inside an envelope object that contains the core payload and optional metadata.
 
 The envelope MAY include:
