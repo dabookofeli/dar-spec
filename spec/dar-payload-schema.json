@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dabookofeli/dar-spec/spec/dar-payload-schema.json",
+  "title": "Digital Action Receipt (DAR) — Payload",
+  "description": "Non-authoritative JSON Schema for the DAR core payload. Canonicalization, hashing, and signing are performed over this object only. The normative definition is in dar-core.md.",
+  "type": "object",
+  "required": [
+    "dar_version",
+    "action_type",
+    "action_id",
+    "timestamp",
+    "actor",
+    "inputs_hash",
+    "outcome_hash"
+  ],
+  "properties": {
+    "dar_version": {
+      "type": "string",
+      "description": "Version of the DAR core specification (e.g., \"1.0\")."
+    },
+    "action_type": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A string identifying the category or class of the digital action."
+    },
+    "action_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A unique identifier for the digital action within the issuer's namespace."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp representing when the action reached its commit point."
+    },
+    "actor": {
+      "type": "object",
+      "required": ["type", "id"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["system", "service", "agent", "user"],
+          "description": "The class of actor responsible for the action."
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An opaque identifier for the actor."
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs_hash": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic hash referencing externally stored inputs associated with the action."
+    },
+    "outcome_hash": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic hash referencing externally stored outcomes/results associated with the action."
+    }
+  },
+  "additionalProperties": true
+}
