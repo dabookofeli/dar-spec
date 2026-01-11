@@ -11,3 +11,6 @@ DARs are:
 
 This repository contains the canonical DAR specification.
 
+## Specification
+
+- [DAR Core Specification](spec/dar-core.md)
