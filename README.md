@@ -14,3 +14,8 @@ This repository contains the canonical DAR specification.
 ## Specification
 
 - [DAR Core Specification](spec/dar-core.md)
+
+## License
+
+This specification is licensed under the Apache License, Version 2.0.
+See the [LICENSE](LICENSE) file for details.
